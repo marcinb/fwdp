@@ -70,13 +70,11 @@
 ;; Convenience
 
 (defn read-suspects [filename]
-  (mapify
-    (parse
-      (slurp filename))))
-
+  (filter valid-record?
+          (mapify
+            (parse
+              (slurp filename)))))
 (suspect-names
   (glitter-filter
     3 (read-suspects filename)))
-
-(valid-record? {:name "Marcin" :glitter-index 10})
 
