@@ -46,6 +46,26 @@
 (defn suspect-names [suspects]
   (map (fn [suspect] (get suspect :name)) suspects))
 
+;; Validations
+
+(def validations
+  {:name present? :glitter-index non-negative-number?})
+
+(def present? (complement empty?))
+
+(defn non-negative-number? [n]
+  (or (> n 0) (= n 0)))
+
+(defn invalid-field? [field-name value]
+  (not ((get validations field-name) value)))
+
+(defn invalid-record? [record]
+  (some (fn [field]
+         (let [field-name (first field)]
+           (invalid-field? field-name (get record field-name))))
+        record))
+
+(def valid-record? (complement invalid-record?))
 
 ;; Convenience
 
@@ -57,3 +77,6 @@
 (suspect-names
   (glitter-filter
     3 (read-suspects filename)))
+
+(valid-record? {:name "Marcin" :glitter-index 10})
+
