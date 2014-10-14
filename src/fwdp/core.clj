@@ -39,5 +39,10 @@
             (> (get suspect :glitter-index) max-glitter))
           suspects))
 
-(glitter-filter 3
-  (mapify (parse (slurp filename))))
+(defn suspect-names [suspects]
+  (map (fn [suspect] (get suspect :name)) suspects))
+
+
+(suspect-names
+  (glitter-filter
+    3 (mapify (parse (slurp filename)))))
