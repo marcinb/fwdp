@@ -3,6 +3,8 @@
 
 (def filename "database.csv")
 
+;; Parsing
+
 (defn str->int [str]
   (Integer. str))
 
@@ -34,6 +36,8 @@
            (into {} (zip headers (map convert-row-value headers row))))
          rows)))
 
+;; Filtering
+
 (defn glitter-filter [max-glitter suspects]
   (filter (fn [suspect]
             (> (get suspect :glitter-index) max-glitter))
@@ -41,6 +45,9 @@
 
 (defn suspect-names [suspects]
   (map (fn [suspect] (get suspect :name)) suspects))
+
+
+;; Convenience
 
 (defn read-suspects [filename]
   (mapify
