@@ -42,7 +42,11 @@
 (defn suspect-names [suspects]
   (map (fn [suspect] (get suspect :name)) suspects))
 
+(defn read-suspects [filename]
+  (mapify
+    (parse
+      (slurp filename))))
 
 (suspect-names
   (glitter-filter
-    3 (mapify (parse (slurp filename)))))
+    3 (read-suspects filename)))
